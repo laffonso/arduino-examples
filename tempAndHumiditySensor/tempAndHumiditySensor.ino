@@ -132,25 +132,7 @@ void loop()
    }
    client.loop();
    delay(DELAY);
-   delay(DELAY);
-   delay(DELAY);
-   delay(DELAY);
-   delay(DELAY);
-   delay(DELAY);
-   delay(DELAY);
-   delay(DELAY);
-   delay(DELAY);
-   delay(DELAY);
-   delay(DELAY);
-   delay(DELAY);
-   delay(DELAY);
-   delay(DELAY);
-   delay(DELAY);
-   delay(DELAY);
-   delay(DELAY);
-   delay(DELAY);
-   delay(DELAY);
-   delay(DELAY);
+  
    
    char topic[top.length()+1];
    top.toCharArray(topic, top.length()+1);
