@@ -1,2 +1,3 @@
-# gps-module
-gps code for arduino using GY-GPS6MV2
+# arduino-projects
+
+Here you'll find some projects made on Arduino IDE targeting esp8266 and Arduino UNO/MEGA
