@@ -9,7 +9,12 @@
 #define WIFI_SSID "WLL-Inatel"                 //Insert SSID Wifi
 #define WIFI_PASSWORD "inatelsemfio"          //Insert Password Wifi
 #define MQTT_SERVER "131.221.240.23"
-#define APPLICATION "5cf5-9521-b035-ff54-517b-cb21" //You should change to your application. You can find by loggin to your user account and accessing http://131.221.240.23:18090/admin-gui/devices or http://131.221.240.23:18090/admin-gui/users
+/*
+You should change APPLICATION to your application identifier.
+You can find by signing in to your user account and accessing:
+http://131.221.240.23:18090/admin-gui/devices or http://131.221.240.23:18090/admin-gui/users
+*/
+#define APPLICATION "5cf5-9521-b035-ff54-517b-cb21" 
 #define DEVICE_USERNAME "2ac7b659-29a3-4c76-b716-9fe5c2244dbb"
 #define DEVICE_PASSWORD "rWF_BZ4I3-h5SNl"
 #define SUBTOPIC "/home/coffeMaker/listen/" // Topic to subscribe
