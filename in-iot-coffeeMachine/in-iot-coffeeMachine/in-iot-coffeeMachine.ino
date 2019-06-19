@@ -1,18 +1,4 @@
 /*
-*
-*InIoT credentials:
-*login: luisfernando_affonso@hotmail.com
-*senha: luis123fernando456
-*
-*Username:
-2ac7b693-29f4-4cbd-b716-9fe5c2244dbb
-*
-*
-*Password:
-*rWF_BZ4I3-h5SNl
-*
-*application:
-*5cf5-0524-b035-ff54-517b-be1f
 * 
 */
 
@@ -20,14 +6,14 @@
 #include <ESP8266WiFi.h>
 #include <String.h>
 
-#define WIFI_SSID "WLL-Inatel"                 //Inserir SSID Wifi
-#define WIFI_PASSWORD "inatelsemfio"          //Inserir Password Wifi
+#define WIFI_SSID "WLL-Inatel"                 //Insert SSID Wifi
+#define WIFI_PASSWORD "inatelsemfio"          //Insert Password Wifi
 #define MQTT_SERVER "131.221.240.23"
-#define APPLICATION "5cf5-0524-b035-ff54-517b-be1f"
-#define DEVICE_USERNAME "2ac7b693-29f4-4cbd-b716-9fe5c2244dbb"
+#define APPLICATION "5cf5-9521-b035-ff54-517b-cb21" //You should change to your application. You can find by loggin to your user account and accessing http://131.221.240.23:18090/admin-gui/devices or http://131.221.240.23:18090/admin-gui/users
+#define DEVICE_USERNAME "2ac7b659-29a3-4c76-b716-9fe5c2244dbb"
 #define DEVICE_PASSWORD "rWF_BZ4I3-h5SNl"
-#define SUBTOPIC "/home/coffeMaker/listen/"
-#define REPLYTOPIC "/home/coffeMaker/reply/"
+#define SUBTOPIC "/home/coffeMaker/listen/" // Topic to subscribe
+#define REPLYTOPIC "/home/coffeMaker/reply/" // Topic to publish
 #define COFFEE1 "Nespresso"
 #define COFFEE2 "Capuccino"
 #define COFFEE3 "Java"
@@ -47,7 +33,8 @@ char receivedPayload[30];
 
 
 
-
+//Actions to be performed when a message arrives on the subscribed topic
+//The client only publishes when it receives a message
 void callback(char* topic, byte* payload, unsigned int length) {
   Serial.print("Message arrived [");
   Serial.print(topic);
@@ -96,7 +83,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
         client.publish(publishTopic,msg);
       }
     }else{
-      Serial.println("chegou arui");
+      //Serial.println("chegou arui");
       replyMessage = "Invalid option, I only have coffee!";
       char msg[replyMessage.length()+1];
       replyMessage.toCharArray(msg,replyMessage.length()+1);
@@ -105,10 +92,11 @@ void callback(char* topic, byte* payload, unsigned int length) {
     aux0 = "";
 }
 
+//Sometimes, the connection to the MQTT broker will be lost. This method ensures that the client will reconnect
 void reconnect() {
   while (!client.connected()) {
     String clientId = "ESP8266Client";
-    if (client.connect(clientId.c_str(), DEVICE_USERNAME, DEVICE_PASSWORD)) {     //Login e senha para o middleware
+    if (client.connect(clientId.c_str(), DEVICE_USERNAME, DEVICE_PASSWORD)) {     //Login and password for middleware
       Serial.println("connected");
       aux1 = String(APPLICATION) + String(SUBTOPIC) + String ( "+" ); 
       char subscribeTopic[aux1.length()+1];
@@ -134,7 +122,7 @@ void setup() {
     Serial.print(".");
     delay(500); 
   }
-  Serial.print("Conectado: ");
+  Serial.print("Conected: ");
   Serial.println(WiFi.localIP());
   client.setServer(MQTT_SERVER, 18833);
   client.setCallback(callback);
