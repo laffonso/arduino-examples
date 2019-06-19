@@ -27,10 +27,15 @@ Application
 #include <DHT.h>
 
 
-#define WIFI_SSID "WLL-Inatel"        //Inserir SSID Wifi
-#define WIFI_PASSWORD "inatelsemfio"  //Inserir Password Wifi
+#define WIFI_SSID "WLL-Inatel"        //Insert Wifi SSID
+#define WIFI_PASSWORD "inatelsemfio"  //Insert Wifi Password
 #define MQTT_SERVER "131.221.240.23"
-#define APPLICATION "5cf5-0524-b035-ff54-517b-be1f"
+/*
+You should change APPLICATION to your application identifier.
+You can find by signing in to your user account and accessing:
+http://131.221.240.23:18090/admin-gui/devices or http://131.221.240.23:18090/admin-gui/users
+*/
+#define APPLICATION "5cf5-0524-b035-ff54-517b-be1f"  
 #define DEVICE_USERNAME "bb0bd82f-0379-4a57-827f-425a463754bb"
 #define DEVICE_PASSWORD "jae9HBxxJTQ8hDD"
 #define PORT 18833
@@ -49,11 +54,13 @@ int value = 0;
 String aux = "";
 char caractere;
 int t, ph, orp, turbidez;
-// 5cf5-0524-b035-ff54-517b-be1f/labIoT/waterSensor/bb0bd82f-0379-4a57-827f-425a463754bb
+
+/* Example of how the topic generated below would look like
+   5cf5-0524-b035-ff54-517b-be1f/labIoT/waterSensor/bb0bd82f-0379-4a57-827f-425a463754bb
+*/
 String top = String(APPLICATION) + String("/labIoT/waterSensor/") + String(DEVICE_USERNAME);
 
-
-
+//Actions to be performed when a message arrives on the subscribed topic
 void callback(char* topic, byte* payload, unsigned int length) {
   Serial.print("Message arrived [");
   Serial.print(topic);
@@ -66,6 +73,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
 
 }
 
+//Sometimes, the connection to the MQTT broker will be lost. This method ensures that the client will reconnect
 void reconnect() {
   // Loop until we're reconnected
   while (!client.connected()) {
