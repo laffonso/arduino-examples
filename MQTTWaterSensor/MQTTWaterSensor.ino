@@ -107,13 +107,13 @@ void setup() {
   
   // connecta ao Wifi
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
-  Serial.print("conectando");
+  Serial.print("Connecting");
   while (WiFi.status() != WL_CONNECTED) {
     Serial.print(".");
     delay(500);
   }
   Serial.println();
-  Serial.print("Conectado: ");
+  Serial.print("Connected: ");
   Serial.println(WiFi.localIP());
 
   client.setServer(MQTT_SERVER, PORT);
@@ -139,37 +139,36 @@ void loop()
    char topic[top.length()+1];
    top.toCharArray(topic, top.length()+1);
 
-   
    /*
-    * {
-    *   "temperatura":"35",
-    *   "humidade":"100"
-    * }
-    */
-    t = random(0,50); 
-    
-    
+   *  The variables below are receiving random values
+   *but it could read for real sensors like LM35, DHT11 and a pH sensor
+   */
+    t = random(0,50);
     ph = random(0,14);
     orp = random(0,14);
     turbidez = 100;
-
-   String str = "{\"temperatura\":" + String(t) +",\"ph\":"+String(ph)+ ",\"orp\":"+String(orp) + ",\"turbidez\":"+String(turbidez) +"}";
-   Serial.println("enviando...");
    
-   
+  /* Example of how the JSON generated below would look like
+   {
+      "temperatura":"32",
+      "ph":"7",
+      "orp":"5",
+      "turbidez":"100"
+   }
+   */
+   String str = "{
+                  \"temperatura\":" + String(t) +",
+                  \"ph\":"+String(ph)+ ",
+                  \"orp\":"+String(orp) + ",
+                  \"turbidez\":"+String(turbidez) +
+                "}";
+   Serial.println("Sending...");
    char msg[str.length()+1];
    str.toCharArray(msg, str.length()+1);
    
    if(client.publish(topic,msg)){
-      Serial.println("Publicado com sucesso.");
+      Serial.println("Successfully published");
    }else{
-      Serial.println("Algo deu errado.");
+      Serial.println("Something went wrong.");
    }
-   
-   
-   
-   
 }
-
-   
-   
